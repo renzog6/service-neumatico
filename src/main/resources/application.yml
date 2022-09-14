@@ -1,0 +1,33 @@
+#Application Configuration
+server:
+  port: 8091
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  # ===============================
+  # DB
+  # ===============================
+  datasource:
+    url: jdbc:mysql://localhost:3306/sae_neumatico?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT-3
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: saedb
+    password: resconi.843
+
+  # ===============================
+  # JPA / HIBERNATE
+  # ===============================
+  jpa:
+    show-sql: true
+#    hibernate:
+#      ddl-auto: none
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        use_sql_comments: false
+#        format_sql: false
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
