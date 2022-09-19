@@ -52,4 +52,6 @@ public class Neumatico {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
+
+    private String info;
 }

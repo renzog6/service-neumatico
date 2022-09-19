@@ -15,7 +15,7 @@ import ar.nex.neumatico.entity.Marca;
 import ar.nex.neumatico.service.MarcaService;
 
 @RestController
-@RequestMapping(value = "/marcas")
+@RequestMapping(value = "/api/marcas")
 @CrossOrigin
 public class MarcaController {
 

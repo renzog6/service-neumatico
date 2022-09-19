@@ -15,7 +15,7 @@ import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.service.NeumaticoService;
 
 @RestController
-@RequestMapping(value = "/neumaticos")
+@RequestMapping(value = "/api/neumaticos")
 @CrossOrigin
 public class NeumaticoController {
 
@@ -83,10 +83,10 @@ public class NeumaticoController {
     @PutMapping(value = "/{id}/stock")
     public ResponseEntity<Neumatico> updateStockNeumatico(@PathVariable Long id,
             @RequestParam(name = "quantity", required = true) Integer quantity) {
-        Neumatico Neumatico = NeumaticoService.updateStock(id, quantity);
-        if (Neumatico == null) {
+        Neumatico neumatico = NeumaticoService.updateStock(id, quantity);
+        if (neumatico == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(Neumatico);
+        return ResponseEntity.ok(neumatico);
     }
 }
