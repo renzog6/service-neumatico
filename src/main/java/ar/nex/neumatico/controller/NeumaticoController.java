@@ -20,20 +20,20 @@ import ar.nex.neumatico.service.NeumaticoService;
 public class NeumaticoController {
 
     @Autowired
-    private NeumaticoService NeumaticoService;
+    private NeumaticoService neumaticoService;
 
     @GetMapping
     public ResponseEntity<List<Neumatico>> listNeumatico(
             @RequestParam(name = "categoryId", required = false) Long categoryId) {
         List<Neumatico> Neumaticos = new ArrayList<>();
         if (null == categoryId) {
-            Neumaticos = NeumaticoService.listAllNeumatico();
+            Neumaticos = neumaticoService.listAllNeumatico();
             if (Neumaticos.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
         } else {
             // Neumaticos =
-            // NeumaticoService.findByCategory(Category.builder().id(categoryId).build());
+            // neumaticoService.findByCategory(Category.builder().id(categoryId).build());
             // if (Neumaticos.isEmpty()) {
             // return ResponseEntity.notFound().build();
             // }
@@ -45,7 +45,7 @@ public class NeumaticoController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Neumatico> getNeumatico(@PathVariable("id") Long id) {
-        Neumatico Neumatico = NeumaticoService.getNeumatico(id);
+        Neumatico Neumatico = neumaticoService.getNeumatico(id);
         if (null == Neumatico) {
             return ResponseEntity.notFound().build();
         }
@@ -55,16 +55,16 @@ public class NeumaticoController {
     @PostMapping
     public ResponseEntity<Neumatico> createNeumatico(@Valid @RequestBody Neumatico Neumatico, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, NeumaticoService.formatMessage(result));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, neumaticoService.formatMessage(result));
         }
-        Neumatico NeumaticoCreate = NeumaticoService.createNeumatico(Neumatico);
+        Neumatico NeumaticoCreate = neumaticoService.createNeumatico(Neumatico);
         return ResponseEntity.status(HttpStatus.CREATED).body(NeumaticoCreate);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Neumatico> updateNeumatico(@PathVariable("id") Long id, @RequestBody Neumatico Neumatico) {
         Neumatico.setId(id);
-        Neumatico NeumaticoDB = NeumaticoService.updateNeumatico(Neumatico);
+        Neumatico NeumaticoDB = neumaticoService.updateNeumatico(Neumatico);
         if (NeumaticoDB == null) {
             return ResponseEntity.notFound().build();
         }
@@ -73,7 +73,7 @@ public class NeumaticoController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Neumatico> deleteNeumatico(@PathVariable("id") Long id) {
-        Neumatico NeumaticoDelete = NeumaticoService.deleteNeumatico(id);
+        Neumatico NeumaticoDelete = neumaticoService.deleteNeumatico(id);
         if (NeumaticoDelete == null) {
             return ResponseEntity.notFound().build();
         }
@@ -83,7 +83,7 @@ public class NeumaticoController {
     @PutMapping(value = "/{id}/stock")
     public ResponseEntity<Neumatico> updateStockNeumatico(@PathVariable Long id,
             @RequestParam(name = "quantity", required = true) Integer quantity) {
-        Neumatico neumatico = NeumaticoService.updateStock(id, quantity);
+        Neumatico neumatico = neumaticoService.updateStock(id, quantity);
         if (neumatico == null) {
             return ResponseEntity.notFound().build();
         }
