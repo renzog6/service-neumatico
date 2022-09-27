@@ -16,7 +16,7 @@ import ar.nex.neumatico.service.MarcaService;
 
 @RestController
 @RequestMapping(value = "/api/marcas")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MarcaController {
 
     @Autowired

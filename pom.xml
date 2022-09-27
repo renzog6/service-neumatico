@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ar.nex</groupId>
 	<artifactId>service-neumatico</artifactId>
-	<version>V01</version>
+	<version>0.0.1</version>
 	<name>service-neumatico</name>
 	<description>SAE - Service Neumatico</description>
 	<properties>

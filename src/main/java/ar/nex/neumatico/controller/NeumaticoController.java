@@ -16,7 +16,7 @@ import ar.nex.neumatico.service.NeumaticoService;
 
 @RestController
 @RequestMapping(value = "/api/neumaticos")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NeumaticoController {
 
     @Autowired
