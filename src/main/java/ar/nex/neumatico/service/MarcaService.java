@@ -14,9 +14,9 @@ public interface MarcaService {
     public Marca getMarca(Long id);
 
     /* CRUD */
-    public Marca createMarca(Marca Marca);
+    public Marca createMarca(Marca marca);
 
-    public Marca updateMarca(Marca Marca);
+    public Marca updateMarca(Marca marca);
 
     public Marca deleteMarca(Long id);
 

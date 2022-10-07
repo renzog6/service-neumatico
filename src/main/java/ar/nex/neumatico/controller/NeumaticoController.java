@@ -53,12 +53,13 @@ public class NeumaticoController {
     }
 
     @PostMapping
-    public ResponseEntity<Neumatico> createNeumatico(@Valid @RequestBody Neumatico Neumatico, BindingResult result) {
+    public ResponseEntity<Neumatico> createNeumatico(@Valid @RequestBody Neumatico neumatico, BindingResult result) {
+        System.out.println(">>>>>>>> " + neumatico);
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, neumaticoService.formatMessage(result));
         }
-        Neumatico NeumaticoCreate = neumaticoService.createNeumatico(Neumatico);
-        return ResponseEntity.status(HttpStatus.CREATED).body(NeumaticoCreate);
+        Neumatico neumaticoCreate = neumaticoService.createNeumatico(neumatico);
+        return ResponseEntity.status(HttpStatus.CREATED).body(neumaticoCreate);
     }
 
     @PutMapping(value = "/{id}")

@@ -12,51 +12,51 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ar.nex.neumatico.entity.ErrorMessage;
-import ar.nex.neumatico.entity.Marca;
-import ar.nex.neumatico.repository.MarcaRepository;
+import ar.nex.neumatico.entity.Medida;
+import ar.nex.neumatico.repository.MedidaRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MarcaServiceImpl implements MarcaService {
+public class MedidaServiceImpl implements MedidaService {
 
-    private final MarcaRepository marcaRepository;
+    private final MedidaRepository medidaRepository;
 
     @Override
-    public List<Marca> listAllMarca() {
-        return marcaRepository.findAll();
+    public List<Medida> listAllMedida() {
+        return medidaRepository.findAll();
     }
 
     @Override
-    public Marca getMarca(Long id) {
-        return marcaRepository.findById(id).orElse(null);
+    public Medida getMedida(Long id) {
+        return medidaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Marca createMarca(Marca marca) {
-        return marcaRepository.save(marca);
+    public Medida createMedida(Medida medida) {
+        return medidaRepository.save(medida);
     }
 
     @Override
-    public Marca updateMarca(Marca marca) {
-        Marca marcaDB = getMarca(marca.getId());
-        if (marcaDB == null) {
+    public Medida updateMedida(Medida medida) {
+        Medida medidaDB = getMedida(medida.getId());
+        if (null == medidaDB) {
             return null;
         }
-        marcaDB.setName(marca.getName());
-        marcaDB.setInfo(marca.getInfo());
-        return marcaRepository.save(marcaDB);
+        medidaDB.setName(medida.getName());
+        medidaDB.setInfo(medida.getInfo());
+        return medidaRepository.save(medidaDB);
     }
 
     @Override
-    public Marca deleteMarca(Long id) {
-        Marca marcaDB = getMarca(id);
-        if (marcaDB == null) {
+    public Medida deleteMedida(Long id) {
+        Medida medidaDB = getMedida(id);
+        if (null == medidaDB) {
             return null;
         }
-        // MarcaDB.setStatus("DELETED");
-        marcaRepository.delete(marcaDB);
-        return marcaDB;
+        // MedidaDB.setStatus("DELETED");
+        medidaRepository.delete(medidaDB);
+        return medidaDB;
     }
 
     /**

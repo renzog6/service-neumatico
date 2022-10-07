@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,10 +36,19 @@ public class Neumatico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String equipo;
+    private String name;
 
-    @NotEmpty(message = "La MEDIDA no puede ser vacia.")
-    private String medida;
+    @NotNull(message = "El Deposito no puede ser vacio.")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deposito_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Deposito deposito;
+
+    @NotNull(message = "La MEDIDA no puede ser vacia.")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medida_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Medida medida;
 
     @NotNull(message = "La MARCA no puede ser vacia.")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,4 +65,10 @@ public class Neumatico {
     private Date updateAt;
 
     private String info;
+
+    @Enumerated(EnumType.STRING)
+    private TipoUso uso;
+
+    @Enumerated(EnumType.STRING)
+    private TipoEstado estado;
 }

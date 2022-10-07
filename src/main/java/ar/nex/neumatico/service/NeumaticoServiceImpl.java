@@ -46,7 +46,7 @@ public class NeumaticoServiceImpl implements NeumaticoService {
         if (null == NeumaticoDB) {
             return null;
         }
-        NeumaticoDB.setEquipo(neumatico.getEquipo());
+        NeumaticoDB.setName(neumatico.getName());
         NeumaticoDB.setMedida(neumatico.getMedida());
         NeumaticoDB.setMarca(neumatico.getMarca());
         NeumaticoDB.setModelo(neumatico.getModelo());
