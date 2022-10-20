@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.nex.neumatico.entity.Neumatico;
+import ar.nex.neumatico.entity.StockNeumatico;
+import ar.nex.neumatico.entity.TipoEstado;
 import ar.nex.neumatico.service.NeumaticoService;
 
 @RestController
@@ -54,7 +56,6 @@ public class NeumaticoController {
 
     @PostMapping
     public ResponseEntity<Neumatico> createNeumatico(@Valid @RequestBody Neumatico neumatico, BindingResult result) {
-        System.out.println(">>>>>>>> " + neumatico);
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, neumaticoService.formatMessage(result));
         }
@@ -89,5 +90,20 @@ public class NeumaticoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(neumatico);
+    }
+
+    @GetMapping(value = "/stock")
+    public ResponseEntity<List<StockNeumatico>> getStockNeumatico(
+            @RequestParam(name = "estado", required = false) String estado) {
+
+        List<StockNeumatico> Neumaticos = new ArrayList<>();
+
+        Neumaticos = neumaticoService.getStock(estado);
+
+        if (Neumaticos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(Neumaticos);
     }
 }

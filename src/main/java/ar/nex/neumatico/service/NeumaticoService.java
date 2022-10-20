@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.validation.BindingResult;
 
 import ar.nex.neumatico.entity.Neumatico;
+import ar.nex.neumatico.entity.StockNeumatico;
+import ar.nex.neumatico.entity.TipoEstado;
 
 public interface NeumaticoService {
 
@@ -22,7 +24,10 @@ public interface NeumaticoService {
 
     public Neumatico deleteNeumatico(Long id);
 
+    /* STOCK */
     public Neumatico updateStock(Long id, Integer quantity);
+
+    public List<StockNeumatico> getStock(String estado);
 
     public String formatMessage(BindingResult result);
 

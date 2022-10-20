@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ar.nex.neumatico.entity.ErrorMessage;
 import ar.nex.neumatico.entity.Neumatico;
-
+import ar.nex.neumatico.entity.StockNeumatico;
+import ar.nex.neumatico.entity.TipoEstado;
 import ar.nex.neumatico.repository.NeumaticoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -42,41 +44,54 @@ public class NeumaticoServiceImpl implements NeumaticoService {
 
     @Override
     public Neumatico updateNeumatico(Neumatico neumatico) {
-        Neumatico NeumaticoDB = getNeumatico(neumatico.getId());
-        if (null == NeumaticoDB) {
+        Neumatico neumaticoDB = getNeumatico(neumatico.getId());
+        if (null == neumaticoDB) {
             return null;
         }
-        NeumaticoDB.setName(neumatico.getName());
-        NeumaticoDB.setMedida(neumatico.getMedida());
-        NeumaticoDB.setMarca(neumatico.getMarca());
-        NeumaticoDB.setModelo(neumatico.getModelo());
-        NeumaticoDB.setPosicion(neumatico.getPosicion());
-        NeumaticoDB.setInfo(neumatico.getInfo());
-        NeumaticoDB.setUpdateAt(new Date());
-        return neumaticoRepository.save(NeumaticoDB);
+        neumaticoDB.setName(neumatico.getName());
+        neumaticoDB.setMedida(neumatico.getMedida());
+        neumaticoDB.setMarca(neumatico.getMarca());
+        neumaticoDB.setModelo(neumatico.getModelo());
+        neumaticoDB.setPosicion(neumatico.getPosicion());
+        neumaticoDB.setUso(neumatico.getUso());
+        neumaticoDB.setInfo(neumatico.getInfo());
+        neumaticoDB.setEstado(neumatico.getEstado());
+        neumaticoDB.setDeposito(neumatico.getDeposito());
+        neumaticoDB.setUpdateAt(new Date());
+        return neumaticoRepository.save(neumaticoDB);
     }
 
     @Override
     public Neumatico deleteNeumatico(Long id) {
-        Neumatico NeumaticoDB = getNeumatico(id);
-        if (null == NeumaticoDB) {
+        Neumatico neumaticoDB = getNeumatico(id);
+        if (null == neumaticoDB) {
             return null;
         }
-        // NeumaticoDB.setStatus("DELETED");
-        neumaticoRepository.delete(NeumaticoDB);
-        return NeumaticoDB;
+        // neumaticoDB.setStatus("DELETED");
+        neumaticoRepository.delete(neumaticoDB);
+        return neumaticoDB;
     }
 
     @Override
     public Neumatico updateStock(Long id, Integer quantity) {
-        Neumatico NeumaticoDB = getNeumatico(id);
-        if (null == NeumaticoDB) {
+        Neumatico neumaticoDB = getNeumatico(id);
+        if (null == neumaticoDB) {
             return null;
         }
-        Integer stock = NeumaticoDB.getStock() + quantity;
-        NeumaticoDB.setStock(stock);
-        NeumaticoDB.setUpdateAt(new Date());
-        return neumaticoRepository.save(NeumaticoDB);
+        Integer stock = neumaticoDB.getStock() + quantity;
+        neumaticoDB.setStock(stock);
+        neumaticoDB.setUpdateAt(new Date());
+        return neumaticoRepository.save(neumaticoDB);
+    }
+
+    @Override
+    public List<StockNeumatico> getStock(String estado) {
+        if (Objects.equals("Todo", estado)) {
+            return neumaticoRepository.getStockAll();
+        } else {
+            return neumaticoRepository.getStock(TipoEstado.valueOf(estado));
+        }
+
     }
 
     /**
