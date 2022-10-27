@@ -1,6 +1,8 @@
 package ar.nex.neumatico.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +17,10 @@ public class Equipo {
     private Long id;
     private String name;
     private String patente;
-    private String tipo;
+
+    @Enumerated(EnumType.STRING)
+    private TipoEquipo tipo;
+
     private String chofer;
     private String info;
     private boolean estado;

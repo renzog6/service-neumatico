@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.validation.BindingResult;
 
 import ar.nex.neumatico.entity.Equipo;
+import ar.nex.neumatico.entity.TipoEquipo;
 
 public interface EquipoService {
 
     /* Gets */
     public List<Equipo> listAllEquipo();
+
+    public List<Equipo> listByTipo(TipoEquipo tipo);
 
     public Equipo getEquipo(Long id);
 

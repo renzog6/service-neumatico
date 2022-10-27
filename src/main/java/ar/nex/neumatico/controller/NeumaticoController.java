@@ -13,7 +13,6 @@ import java.util.List;
 
 import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.entity.StockNeumatico;
-import ar.nex.neumatico.entity.TipoEstado;
 import ar.nex.neumatico.service.NeumaticoService;
 
 @RestController

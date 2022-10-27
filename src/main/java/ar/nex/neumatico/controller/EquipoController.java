@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.nex.neumatico.entity.Equipo;
+import ar.nex.neumatico.entity.TipoEquipo;
 import ar.nex.neumatico.service.EquipoService;
 
 @RestController
@@ -23,12 +24,21 @@ public class EquipoController {
     private EquipoService equipoService;
 
     @GetMapping
-    public ResponseEntity<List<Equipo>> listEquipo() {
+    public ResponseEntity<List<Equipo>> listEquipo(
+            @RequestParam(name = "tipo", required = false) TipoEquipo tipo) {
+
         List<Equipo> equipos = new ArrayList<>();
 
-        equipos = equipoService.listAllEquipo();
-        if (equipos.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (null == tipo) {
+            equipos = equipoService.listAllEquipo();
+            if (equipos.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            equipos = equipoService.listByTipo(tipo);
+            if (equipos.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
         }
 
         return ResponseEntity.ok(equipos);

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ar.nex.neumatico.entity.ErrorMessage;
+import ar.nex.neumatico.entity.TipoEquipo;
 import ar.nex.neumatico.entity.Equipo;
 import ar.nex.neumatico.repository.EquipoRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,11 @@ public class EquipoServiceImpl implements EquipoService {
     @Override
     public List<Equipo> listAllEquipo() {
         return equipoRepository.findAll();
+    }
+
+    @Override
+    public List<Equipo> listByTipo(TipoEquipo tipo) {
+        return equipoRepository.findByTipo(tipo);
     }
 
     @Override
