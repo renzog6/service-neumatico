@@ -15,7 +15,7 @@ public interface NeumaticoService {
 
     public Neumatico getNeumatico(Long id);
 
-    // public List<Neumatico> findByCategory(Category category);
+    public List<Neumatico> listByEstado(TipoEstado estado);
 
     /* CRUD */
     public Neumatico createNeumatico(Neumatico Neumatico);

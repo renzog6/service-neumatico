@@ -10,9 +10,11 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.entity.StockNeumatico;
+import ar.nex.neumatico.entity.TipoEstado;
 import ar.nex.neumatico.service.NeumaticoService;
 
 @RestController
@@ -25,20 +27,21 @@ public class NeumaticoController {
 
     @GetMapping
     public ResponseEntity<List<Neumatico>> listNeumatico(
-            @RequestParam(name = "categoryId", required = false) Long categoryId) {
+            @RequestParam(name = "estado", required = false) TipoEstado estado) {
+        System.out.println("VERX " + estado);
         List<Neumatico> Neumaticos = new ArrayList<>();
-        if (null == categoryId) {
+
+        if (estado == null) {
             Neumaticos = neumaticoService.listAllNeumatico();
             if (Neumaticos.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
         } else {
-            // Neumaticos =
-            // neumaticoService.findByCategory(Category.builder().id(categoryId).build());
-            // if (Neumaticos.isEmpty()) {
-            // return ResponseEntity.notFound().build();
-            // }
-            System.out.println("VER");
+            Neumaticos = neumaticoService.listByEstado(estado);
+            if (Neumaticos.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            System.out.println("VER" + estado);
         }
 
         return ResponseEntity.ok(Neumaticos);

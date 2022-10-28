@@ -32,6 +32,11 @@ public class NeumaticoServiceImpl implements NeumaticoService {
     }
 
     @Override
+    public List<Neumatico> listByEstado(TipoEstado estado) {
+        return neumaticoRepository.findByEstado(estado);
+    }
+
+    @Override
     public Neumatico getNeumatico(Long id) {
         return neumaticoRepository.findById(id).orElse(null);
     }
