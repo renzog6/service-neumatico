@@ -10,8 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.entity.StockNeumatico;
 import ar.nex.neumatico.entity.TipoEstado;
