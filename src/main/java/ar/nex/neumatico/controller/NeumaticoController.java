@@ -26,7 +26,6 @@ public class NeumaticoController {
     @GetMapping
     public ResponseEntity<List<Neumatico>> listNeumatico(
             @RequestParam(name = "estado", required = false) TipoEstado estado) {
-        System.out.println("VERX " + estado);
         List<Neumatico> Neumaticos = new ArrayList<>();
 
         if (estado == null) {

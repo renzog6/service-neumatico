@@ -59,10 +59,6 @@ public class Neumatico {
     private String posicion;
     private Integer stock;
 
-    @Column(name = "update_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
-
     private String info;
 
     @Enumerated(EnumType.STRING)
@@ -70,4 +66,12 @@ public class Neumatico {
 
     @Enumerated(EnumType.STRING)
     private TipoEstado estado;
+
+    @Column(name = "update_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateAt;
+
+    @Column(name = "create_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createAt;
 }

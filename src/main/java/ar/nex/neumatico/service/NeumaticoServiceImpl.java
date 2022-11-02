@@ -42,9 +42,8 @@ public class NeumaticoServiceImpl implements NeumaticoService {
     }
 
     @Override
-    public Neumatico createNeumatico(Neumatico Neumatico) {
-        Neumatico.setUpdateAt(new Date());
-        return neumaticoRepository.save(Neumatico);
+    public Neumatico createNeumatico(Neumatico neumatico) {
+        return neumaticoRepository.save(neumatico);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class NeumaticoServiceImpl implements NeumaticoService {
         neumaticoDB.setInfo(neumatico.getInfo());
         neumaticoDB.setEstado(neumatico.getEstado());
         neumaticoDB.setDeposito(neumatico.getDeposito());
-        neumaticoDB.setUpdateAt(new Date());
+        neumaticoDB.setUpdateAt(neumatico.getUpdateAt());
         return neumaticoRepository.save(neumaticoDB);
     }
 
