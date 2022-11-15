@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,51 +23,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "neumatico")
+@Table(name = "Instalado")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Neumatico {
+public class Instalado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
 
-    @NotNull(message = "El Deposito no puede ser vacio.")
+    @NotNull(message = "No puede ser vacio.")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deposito_id")
+    @JoinColumn(name = "equipo_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private Deposito deposito;
+    private Equipo equipo;
 
-    @NotNull(message = "La MEDIDA no puede ser vacia.")
+    @NotNull(message = "No puede ser vacio.")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medida_id")
+    @JoinColumn(name = "neumatico_id")
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private Medida medida;
+    private Neumatico neumatico;
 
-    @NotNull(message = "La MARCA no puede ser vacia.")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "marca_id")
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private Marca marca;
-
-    private String modelo;
+    private String posicion;
 
     private String info;
 
-    @Enumerated(EnumType.STRING)
-    private TipoUso uso;
-
-    @Enumerated(EnumType.STRING)
-    private TipoEstado estado;
-
-    @Column(name = "update_at")
+    @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
-
-    @Column(name = "create_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+    private Date fecha;
 }

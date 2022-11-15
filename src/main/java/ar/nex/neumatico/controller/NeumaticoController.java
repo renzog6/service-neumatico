@@ -10,9 +10,14 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
+import ar.nex.neumatico.entity.Deposito;
+import ar.nex.neumatico.entity.Medida;
 import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.entity.StockNeumatico;
 import ar.nex.neumatico.entity.TipoEstado;
+import ar.nex.neumatico.service.DepositoService;
+import ar.nex.neumatico.service.MedidaService;
 import ar.nex.neumatico.service.NeumaticoService;
 
 @RestController
@@ -22,6 +27,11 @@ public class NeumaticoController {
 
     @Autowired
     private NeumaticoService neumaticoService;
+    @Autowired
+    private DepositoService depositoService;
+
+    @Autowired
+    private MedidaService medidaService;
 
     @GetMapping
     public ResponseEntity<List<Neumatico>> listNeumatico(
@@ -39,6 +49,53 @@ public class NeumaticoController {
                 return ResponseEntity.notFound().build();
             }
             System.out.println("VER" + estado);
+        }
+
+        return ResponseEntity.ok(Neumaticos);
+    }
+
+    @GetMapping(value = "/deposito")
+    public ResponseEntity<List<Neumatico>> listNeumaticoByDeposito(
+            @RequestParam(name = "deposito", required = false) Long deposito_id) {
+        List<Neumatico> Neumaticos = new ArrayList<>();
+
+        if (deposito_id == null) {
+            Neumaticos = neumaticoService.listAllNeumatico();
+            if (Neumaticos.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            Deposito deposito = depositoService.getDeposito(deposito_id);
+            Neumaticos = neumaticoService.listByDeposito(deposito);
+            if (Neumaticos.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+        }
+
+        return ResponseEntity.ok(Neumaticos);
+    }
+
+    @GetMapping(value = "/disponibles")
+    public ResponseEntity<List<Neumatico>> listNeumaticoDisponibles(
+            @RequestParam(name = "deposito", required = false) Long deposito_id,
+            @RequestParam(name = "medida", required = false) Long medida_id) {
+
+        List<Neumatico> Neumaticos = new ArrayList<>();
+
+        if (deposito_id == null) {
+            Neumaticos = neumaticoService.listAllNeumatico();
+            if (Neumaticos.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+
+            Deposito deposito = depositoService.getDeposito(deposito_id);
+            Medida medida = medidaService.getMedida(medida_id);
+            Neumaticos = neumaticoService.listByDepositoAndMedida(deposito, medida);
+
+            if (Neumaticos.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
         }
 
         return ResponseEntity.ok(Neumaticos);
@@ -79,16 +136,6 @@ public class NeumaticoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(NeumaticoDelete);
-    }
-
-    @PutMapping(value = "/{id}/stock")
-    public ResponseEntity<Neumatico> updateStockNeumatico(@PathVariable Long id,
-            @RequestParam(name = "quantity", required = true) Integer quantity) {
-        Neumatico neumatico = neumaticoService.updateStock(id, quantity);
-        if (neumatico == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(neumatico);
     }
 
     @GetMapping(value = "/stock")

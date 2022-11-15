@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import ar.nex.neumatico.entity.Deposito;
+import ar.nex.neumatico.entity.Medida;
 import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.entity.StockNeumatico;
 import ar.nex.neumatico.entity.TipoEstado;
@@ -29,5 +31,9 @@ public interface NeumaticoRepository extends JpaRepository<Neumatico, Long> {
         List<StockNeumatico> getStockAll();
 
         List<Neumatico> findByEstado(TipoEstado estado);
+
+        List<Neumatico> findByDeposito(Deposito deposito);
+
+        List<Neumatico> findByDepositoAndMedida(Deposito deposito, Medida medida);
 
 }

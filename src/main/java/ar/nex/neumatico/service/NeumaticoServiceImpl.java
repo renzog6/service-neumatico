@@ -13,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ar.nex.neumatico.entity.Deposito;
 import ar.nex.neumatico.entity.ErrorMessage;
+import ar.nex.neumatico.entity.Medida;
 import ar.nex.neumatico.entity.Neumatico;
 import ar.nex.neumatico.entity.StockNeumatico;
 import ar.nex.neumatico.entity.TipoEstado;
@@ -37,6 +39,16 @@ public class NeumaticoServiceImpl implements NeumaticoService {
     }
 
     @Override
+    public List<Neumatico> listByDeposito(Deposito deposito) {
+        return neumaticoRepository.findByDeposito(deposito);
+    }
+
+    @Override
+    public List<Neumatico> listByDepositoAndMedida(Deposito deposito, Medida medida) {
+        return neumaticoRepository.findByDepositoAndMedida(deposito, medida);
+    }
+
+    @Override
     public Neumatico getNeumatico(Long id) {
         return neumaticoRepository.findById(id).orElse(null);
     }
@@ -56,7 +68,6 @@ public class NeumaticoServiceImpl implements NeumaticoService {
         neumaticoDB.setMedida(neumatico.getMedida());
         neumaticoDB.setMarca(neumatico.getMarca());
         neumaticoDB.setModelo(neumatico.getModelo());
-        neumaticoDB.setPosicion(neumatico.getPosicion());
         neumaticoDB.setUso(neumatico.getUso());
         neumaticoDB.setInfo(neumatico.getInfo());
         neumaticoDB.setEstado(neumatico.getEstado());
@@ -74,18 +85,6 @@ public class NeumaticoServiceImpl implements NeumaticoService {
         // neumaticoDB.setStatus("DELETED");
         neumaticoRepository.delete(neumaticoDB);
         return neumaticoDB;
-    }
-
-    @Override
-    public Neumatico updateStock(Long id, Integer quantity) {
-        Neumatico neumaticoDB = getNeumatico(id);
-        if (null == neumaticoDB) {
-            return null;
-        }
-        Integer stock = neumaticoDB.getStock() + quantity;
-        neumaticoDB.setStock(stock);
-        neumaticoDB.setUpdateAt(new Date());
-        return neumaticoRepository.save(neumaticoDB);
     }
 
     @Override
